@@ -6,7 +6,7 @@
 /*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 02:46:07 by sbecker           #+#    #+#             */
-/*   Updated: 2019/05/02 06:19:54 by sbecker          ###   ########.fr       */
+/*   Updated: 2019/05/03 02:45:42 by sbecker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct	s_cl
 {
 	cl_command_queue	queue;
 	cl_context			context;
+	cl_program			program;
 	cl_kernel			kernel_mandel;
 	cl_kernel			kernel_rt;
 }				t_cl;
@@ -64,8 +65,9 @@ void			initialization_fractal(t_fractal *fractal);
 int				get_num_objects(t_fractal_point **all_points, int xy_len, int z_len);
 void			get_objects(t_conf *conf, t_fractal_point **all_spheres, int xy_len, int z_len);
 t_fractal_point	**get_fractal(t_conf *conf, size_t global_size);
-t_object3d		new_obj_sphere(const t_vector3d center, const float radius,
-		const t_color color, const int smoothness, int light_source, float reflectivity);
 int				key_press(int key, t_conf *conf);
+int				exit_event(t_conf *conf);
+int				refresh(t_conf *conf);
+void			ft_exit(t_conf *conf);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 03:55:18 by sbecker           #+#    #+#             */
-/*   Updated: 2019/05/02 05:42:43 by sbecker          ###   ########.fr       */
+/*   Updated: 2019/05/04 06:19:45 by sbecker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int     get_num_objects(t_fractal_point **all_points, int xy_len, int z_len)
 void    get_objects(t_conf *conf, t_fractal_point **all_points, int xy_len, int z_len)
 {
 	t_object3d      *objects;
-	t_lights        lights;
 	register int    i;
 	register int    j;
 	register int    count;
@@ -52,10 +51,9 @@ void    get_objects(t_conf *conf, t_fractal_point **all_points, int xy_len, int 
 			if (all_points[i][j].flag == 1)
 			{
 				objects[++count] = new_obj_sphere(mv_get_vector3d(all_points[i][j].x,
-						all_points[i][j].y, all_points[i][j].z), 0.5, get_rgb(255, 0, 0),
-						100, 0, 0);
-//				printf("%d / %d : (%f, %f, %f)\n", count, conf->objects_num, all_points[i][j].x,
-//						all_points[i][j].y, all_points[i][j].z);
+						all_points[i][j].y, all_points[i][j].z), 0.5,
+						get_rgb(all_points[i][j].r, all_points[i][j].g,
+						all_points[i][j].b), 4, 0.5);
 			}
 		j = -1;
 	}

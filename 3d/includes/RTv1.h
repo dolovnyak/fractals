@@ -17,7 +17,6 @@ typedef struct	s_object3d
 	t_color		color;
 	int			smoothness;
 	float		reflectivity;
-	int			light_source;
 	t_sphere	sphere;
 }				t_object3d;
 
@@ -55,10 +54,10 @@ typedef struct  s_canvas
  */
 
 t_object3d	new_obj_sphere(const t_vector3d center, const float radius, const t_color color,
-		const int smoothness, int light_source, float reflectivity);
+		const int smoothness, float reflectivity);
 t_vector3d	get_normal_vector_sphere(t_sphere sphere, const t_vector3d intersection_point);
-t_lights	new_light_ambient(float intensity);
-t_lights	new_light_point(float intensity, t_vector3d position);
-t_lights	new_light_directional(float intensity, t_vector3d direction);
+t_lights    new_light_ambient(float intensity);
+t_lights    new_light_point(float intensity, t_vector3d position);
+t_lights    new_light_directional(float intensity, t_vector3d direction);
 
 #endif

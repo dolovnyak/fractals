@@ -11,6 +11,7 @@ kernel void mandelbrot(__global t_fractal_point *point, int z, t_fractal fractal
 	float	iy;
 	float	jz;
 	float	tmp;
+	int		color;
 
 	gid = get_global_id(0);
 	rx = 0.0;
@@ -28,11 +29,15 @@ kernel void mandelbrot(__global t_fractal_point *point, int z, t_fractal fractal
 		rx = tmp;
 	}
 	point[gid].flag = 0;
-	if (i >= fractal.depth)
+	if (i >= 100)
 	{
-		point[gid].x = (float)(gid % fractal.x_len - 400);
-		point[gid].y = (float)(gid / fractal.x_len - 400);
-		point[gid].z = (float)z + 500;
+		point[gid].x = (float)(gid % fractal.x_len - 20);
+		point[gid].y = (float)(gid / fractal.x_len - 20);
+		point[gid].z = (float)z + 60;
+		color = i * 200000;
+		point[gid].r = *((unsigned char*)&color + 2);
+		point[gid].g = *((unsigned char*)&color + 1);
+		point[gid].b = *((unsigned char*)&color + 0);
 		point[gid].flag = 1;
 	}
 }

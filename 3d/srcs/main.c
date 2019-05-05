@@ -6,7 +6,7 @@
 /*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:14:31 by sbecker           #+#    #+#             */
-/*   Updated: 2019/05/02 06:19:52 by sbecker          ###   ########.fr       */
+/*   Updated: 2019/05/05 08:04:59 by sbecker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	get_mem_for_render(t_conf *conf, cl_mem *mem_img,
 		printf("create buffer - error\n");
 }
 
-void	get_math_optimization(t_conf *conf)
+void    get_math_optimization(t_conf *conf)
 {
 	conf->canvas.cos_x_rotate = cos(conf->canvas.x_rotation);
 	conf->canvas.sin_x_rotate = sin(conf->canvas.x_rotation);
@@ -75,18 +75,16 @@ int		refresh(t_conf *conf)
 	cl_mem		mem_img;
 	cl_mem		mem_objects;
 	cl_mem		mem_lights;
-	int			err;
 
-/*	if (conf->flag_rotation_z_left == 1)
-		conf->canvas.z_rotation += 0.05;
-	if (conf->flag_rotation_z_right == 1)
-		conf->canvas.z_rotation -= 0.05;
-	get_math_optimization(conf); */
+	get_math_optimization(conf);
 	get_mem_for_render(conf, &mem_img, &mem_objects, &mem_lights);
 	run_render(conf, &mem_img, &mem_objects, &mem_lights);
 	mlx_clear_window(conf->mlx.mlx, conf->mlx.win);
 	mlx_put_image_to_window(conf->mlx.mlx, conf->mlx.win,
 			conf->mlx.img_ptr, 0, 0);
+	clReleaseMemObject(mem_img);
+	clReleaseMemObject(mem_objects);
+	clReleaseMemObject(mem_lights);
 	return (0);
 }
 
@@ -95,15 +93,13 @@ int		main(void)
 	t_conf		conf;
 
 	initialization_cl(&conf.cl); //инициализируются сразу все ядра и для расчета фрактала и для рейтрейса
-	initialization_fractal(&conf.fractal); //эта функция лежит в файле с общей инициализацией
+	initialization_fractal(&conf.fractal);
 	initialization_scene(&conf); //в этой функции будет высчитываться фрактал и записываться в массив объектов как сферы
 	initialization_canvas(&conf.canvas);
 	initialization_mlx(&conf.mlx);
 	refresh(&conf);
 	mlx_hook(conf.mlx.win, 2, 0, &key_press, &conf);
-//	mlx_hook(conf.mlx.win, 3, 0, &key_release, &conf);
-//	mlx_hook(conf.mlx.win, 6, 0, &mouse_move, &conf);
-//	mlx_hook(conf.mlx.win, 17, 0, &exit_event, (void*)0);
+	mlx_hook(conf.mlx.win, 17, 0, &exit_event, &conf);
 	mlx_loop(conf.mlx.mlx);
 	return (0);
 }

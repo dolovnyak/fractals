@@ -3,12 +3,9 @@
 int		get_intersect_shadows(t_object3d *obj, t_vector3d intersect_point,
 		t_vector3d direction, float *intersect_dist, float min_distance)
 {
-	if (obj->light_source == 0)
-	{
-		if (obj->type == 1)
-			return (get_intersect_sphere_for_shadows(intersect_point,
-						direction, obj->sphere, intersect_dist, min_distance));
-	}
+	if (obj->type == 1)
+		return (get_intersect_sphere_for_shadows(intersect_point,
+					direction, obj->sphere, intersect_dist, min_distance));
 	return (0);
 }
 

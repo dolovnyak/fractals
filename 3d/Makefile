@@ -1,7 +1,7 @@
 NAME = fractol
 
-FLAGS = -c -g -O3
-MLXFLAGS = -lmlx -framework OpenGL -framework OpenCL -framework AppKit -O3 #-fsanitize=address -g
+FLAGS = -c -O3 -Wall -Werror -Wextra #-g -fsanitize=address
+MLXFLAGS = -lmlx -framework OpenGL -framework OpenCL -framework AppKit -O3 -Wall -Werror -Wextra #-fsanitize=address -g
 
 SOURCES = main.c \
 		  initialisation.c \
@@ -10,7 +10,9 @@ SOURCES = main.c \
 		  get_objects_from_points.c \
 		  create_objects.c \
 		  create_lights.c \
-		  keyboard_events.c
+		  keyboard_events.c \
+		  mouse_events.c \
+		  exit.c
 
 UTILITS = color.c \
 		  math_vec.c
