@@ -6,7 +6,7 @@
 /*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 22:06:08 by sbecker           #+#    #+#             */
-/*   Updated: 2019/04/06 06:16:41 by sbecker          ###   ########.fr       */
+/*   Updated: 2019/05/07 08:17:19 by sbecker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,10 @@ void	initialization_all(t_all *all)
 	all->win = mlx_new_window(all->mlx, all->s_width, all->s_height, "fractol");
 	all->img_ptr = mlx_new_image(all->mlx, all->s_width, all->s_height);
 	all->img_data = mlx_get_data_addr(all->img_ptr, &all->bpp, &all->size_line, &all->endian);
-	all->center_x = 0;
-	all->center_y = 0;
 	all->zoom = 0;
-	all->relation_x = all->s_width / 3;
-	all->relation_y = all->s_height / 3;
 	all->left_b = -2.0;
 	all->right_b = 1.0;
 	all->top_b = -1.5;
 	all->bot_b = 1.5;
-	all->front_b = 1.5;
-	all->rear_b = -1.5;
-//	all->depth = 255;
-	all->depth = 10000;
+	all->depth = 1000;
 }

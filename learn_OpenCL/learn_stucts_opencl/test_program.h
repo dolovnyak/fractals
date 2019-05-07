@@ -21,14 +21,14 @@ typedef struct	s_conf
 	
 typedef struct  s_sphera
 {
-	cl_float    x;
-	cl_float    y;
-	cl_float    z;
-	cl_float    radius;
-	cl_int      r;
-	cl_int      g;
-	cl_int      b;
-	cl_int      flag;
+	float    x;
+	float    y;
+	float    z;
+	float    radius;
+	int      r;
+	int      g;
+	int      b;
+	int      flag;
 }               t_sphera;
 
 void	initialization_CL(t_cl *cl);

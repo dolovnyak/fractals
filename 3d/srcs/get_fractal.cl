@@ -31,8 +31,8 @@ kernel void mandelbrot(__global t_fractal_point *point, int z, t_fractal fractal
 	point[gid].flag = 0;
 	if (i >= 100)
 	{
-		point[gid].x = (float)(gid % fractal.x_len - 20);
-		point[gid].y = (float)(gid / fractal.x_len - 20);
+		point[gid].x = (float)(gid % fractal.x_len - 100);
+		point[gid].y = (float)(gid / fractal.x_len - 100);
 		point[gid].z = (float)z + 60;
 		color = i * 200000;
 		point[gid].r = *((unsigned char*)&color + 2);

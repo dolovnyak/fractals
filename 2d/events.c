@@ -6,7 +6,7 @@
 /*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 12:53:00 by sbecker           #+#    #+#             */
-/*   Updated: 2019/04/02 01:32:43 by sbecker          ###   ########.fr       */
+/*   Updated: 2019/05/03 04:46:12 by sbecker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,6 @@ int     mouse_event(int button, int x, int y, t_all *all)
 		section_b = dx - comp_x;
 		section_b /= 1.5;
 		section_a /= 1.5;*/
-//		printf ("b: %f\n", dx - comp_x);
-//		printf ("d: %f\n", (dx - comp_x) / 1.5);
-//		printf ("a: %f\n", comp_x);
-//		printf ("c: %f\n", comp_x / 1.5);
 		all->left_b = all->left_b + comp_x /8;
 		all->right_b = all->right_b - (dx - comp_x) / 8;
 		all->top_b = all->top_b + comp_y / 8;

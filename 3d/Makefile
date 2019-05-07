@@ -27,8 +27,6 @@ DIR_S = srcs
 
 DIR_U = utilits
 
-SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
-
 OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
 UTLS = $(addprefix $(DIR_O)/,$(UTILITS:.c=.o))

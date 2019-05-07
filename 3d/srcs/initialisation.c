@@ -6,7 +6,7 @@
 /*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 04:47:49 by sbecker           #+#    #+#             */
-/*   Updated: 2019/05/04 07:32:47 by sbecker          ###   ########.fr       */
+/*   Updated: 2019/05/05 09:09:40 by sbecker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void    initialization_fractal(t_fractal *fractal)
 {
-	fractal->x_len = 100;
-	fractal->y_len = 100;
-	fractal->z_len = 100;
+	fractal->x_len = 300;
+	fractal->y_len = 300;
+	fractal->z_len = 300;
 	fractal->left_b = -2.0;
 	fractal->right_b = 2.0;
 	fractal->top_b = -2.0;
@@ -28,7 +28,7 @@ void    initialization_fractal(t_fractal *fractal)
 
 void    initialization_mlx(t_mlx *mlx)
 {
-	mlx->width = 800;
+	mlx->width = 1200;
 	mlx->height = 800;
 	mlx->mlx = mlx_init();
 	mlx->win = mlx_new_window(mlx->mlx, mlx->width, mlx->height, "mandelbrot");
@@ -38,7 +38,7 @@ void    initialization_mlx(t_mlx *mlx)
 
 void	initialization_canvas(t_canvas *canvas)
 {
-	canvas->width = 1;
+	canvas->width = 1.5;
 //	canvas->width = 1.33333333;
 	canvas->height = 1;
 	canvas->min_distance = 1;

@@ -33,8 +33,9 @@ t_vector3d	rotation(t_vector3d A, float cos_x_rotate, float sin_x_rotate,
 	return (res);
 }
 
-__kernel void render(__global char* img, int width, int height, int objects_num, int lights_num,
-		t_canvas canvas, __global t_object3d* objects, __global t_lights* lights)
+__kernel void render(__global char* img, int width, int height, int y,
+		int objects_num, int lights_num, t_canvas canvas,
+		__global t_object3d* objects, __global t_lights* lights)
 {
 	int			gid;
 	t_scene		scene;
@@ -48,9 +49,9 @@ __kernel void render(__global char* img, int width, int height, int objects_num,
 	scene.lights = lights;
 	scene.min_distance = canvas.min_distance;
 	scene.max_distance = canvas.max_distance;
-	cam_ray = get_cam_ray(gid % width, gid / width, canvas, width, height);
+	cam_ray = get_cam_ray(gid % width, y, canvas, width, height);
 	cam_ray = rotation(cam_ray, canvas.cos_x_rotate, canvas.sin_x_rotate,
 				canvas.cos_y_rotate, canvas.sin_y_rotate, canvas.cos_z_rotate, canvas.sin_z_rotate);
 	color = ray_trace(canvas.camera, cam_ray, &scene);
-	put_pixel(gid % width, gid / width, color, img, width, height);
+	put_pixel(gid % width, y, color, img, width, height);
 }

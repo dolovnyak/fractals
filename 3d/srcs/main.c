@@ -6,14 +6,14 @@
 /*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:14:31 by sbecker           #+#    #+#             */
-/*   Updated: 2019/05/05 08:04:59 by sbecker          ###   ########.fr       */
+/*   Updated: 2019/05/05 09:08:47 by sbecker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "config.h"
 
 void	run_render(t_conf *conf, cl_mem *mem_img,
-		cl_mem *mem_objects, cl_mem *mem_lights)
+		cl_mem *mem_objects, cl_mem *mem_lights, int y)
 {
 	int		err;
 	size_t	global_size;
@@ -21,14 +21,15 @@ void	run_render(t_conf *conf, cl_mem *mem_img,
 	err = clSetKernelArg(conf->cl.kernel_rt, 0, sizeof(cl_mem), mem_img);
 	err |= clSetKernelArg(conf->cl.kernel_rt, 1, sizeof(int), &conf->mlx.width);
 	err |= clSetKernelArg(conf->cl.kernel_rt, 2, sizeof(int), &conf->mlx.height);
-	err |= clSetKernelArg(conf->cl.kernel_rt, 3, sizeof(int), &conf->objects_num);
-	err |= clSetKernelArg(conf->cl.kernel_rt, 4, sizeof(int), &conf->lights_num);
-	err |= clSetKernelArg(conf->cl.kernel_rt, 5, sizeof(t_canvas), &conf->canvas);
-	err |= clSetKernelArg(conf->cl.kernel_rt, 6, sizeof(cl_mem), mem_objects);
-	err |= clSetKernelArg(conf->cl.kernel_rt, 7, sizeof(cl_mem), mem_lights);
+	err |= clSetKernelArg(conf->cl.kernel_rt, 3, sizeof(int), &y);
+	err |= clSetKernelArg(conf->cl.kernel_rt, 4, sizeof(int), &conf->objects_num);
+	err |= clSetKernelArg(conf->cl.kernel_rt, 5, sizeof(int), &conf->lights_num);
+	err |= clSetKernelArg(conf->cl.kernel_rt, 6, sizeof(t_canvas), &conf->canvas);
+	err |= clSetKernelArg(conf->cl.kernel_rt, 7, sizeof(cl_mem), mem_objects);
+	err |= clSetKernelArg(conf->cl.kernel_rt, 8, sizeof(cl_mem), mem_lights);
 	if (err != 0)
 		printf("set kernel arg - error\n");
-	global_size = conf->mlx.width * conf->mlx.height;
+	global_size = conf->mlx.width;
 	err = clEnqueueNDRangeKernel(conf->cl.queue, conf->cl.kernel_rt, 1, NULL,
 			&global_size, NULL, 0, NULL, NULL);
 	if (err != 0)
@@ -72,13 +73,20 @@ void    get_math_optimization(t_conf *conf)
 
 int		refresh(t_conf *conf)
 {
-	cl_mem		mem_img;
-	cl_mem		mem_objects;
-	cl_mem		mem_lights;
+	cl_mem			mem_img;
+	cl_mem			mem_objects;
+	cl_mem			mem_lights;
+	register int	i;
 
 	get_math_optimization(conf);
+	i = -1;
 	get_mem_for_render(conf, &mem_img, &mem_objects, &mem_lights);
-	run_render(conf, &mem_img, &mem_objects, &mem_lights);
+	while (++i <= conf->mlx.height)
+	{
+		run_render(conf, &mem_img, &mem_objects, &mem_lights, i);
+		if (i % 10 == 0)
+			printf("pixels: %d \\ %d\n", (i + 1) * conf->mlx.width, conf->mlx.width * conf->mlx.height);
+	}
 	mlx_clear_window(conf->mlx.mlx, conf->mlx.win);
 	mlx_put_image_to_window(conf->mlx.mlx, conf->mlx.win,
 			conf->mlx.img_ptr, 0, 0);

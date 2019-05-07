@@ -6,7 +6,7 @@
 /*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 07:30:52 by sbecker           #+#    #+#             */
-/*   Updated: 2019/04/01 19:37:52 by sbecker          ###   ########.fr       */
+/*   Updated: 2019/05/07 08:16:03 by sbecker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	initialization(t_all *all)
 	all->center_x = 0;
 	all->center_y = 0;
 	all->zoom = 0;
-	all->relation_x = all->s_width / 3;
-	all->relation_y = all->s_height / 3;
 	all->left_b = -2.0;
 	all->right_b = 1.0;
 	all->top_b = -1.5;

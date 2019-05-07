@@ -6,7 +6,7 @@
 /*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 13:08:09 by sbecker           #+#    #+#             */
-/*   Updated: 2019/04/02 22:41:59 by sbecker          ###   ########.fr       */
+/*   Updated: 2019/05/07 08:15:48 by sbecker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ typedef struct  s_all
 	int			center_x;
 	int			center_y;
 	int			zoom;
-	int			relation_x;
-	int			relation_y;
 	double		left_b;
 	double		right_b;
 	double		top_b;

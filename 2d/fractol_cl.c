@@ -6,7 +6,7 @@
 /*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 07:30:52 by sbecker           #+#    #+#             */
-/*   Updated: 2019/04/02 01:54:53 by sbecker          ###   ########.fr       */
+/*   Updated: 2019/05/05 11:51:12 by sbecker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ int		refresh(t_all *all)
 	memimg = clCreateBuffer(all->context, CL_MEM_READ_WRITE, all->size_line * all->s_height, NULL, &err);
 	if (err != 0)
 		printf ("create buffer - error\n");
-	/* если будет нужен очищеный img
-	 * err = clEnqueueWriteBuffer(all->queue, memimg, CL_TRUE, 0, all->size_line, all->img_data, 0, NULL, NULL);
-	 */
 	err = clSetKernelArg(all->kernel, 0, sizeof(cl_mem), &memimg);
 	err |= clSetKernelArg(all->kernel, 1, sizeof(double), &step_x);
 	err |= clSetKernelArg(all->kernel, 2, sizeof(double), &step_y);
