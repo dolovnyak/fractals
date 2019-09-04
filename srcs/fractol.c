@@ -6,7 +6,7 @@
 /*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 12:26:06 by sbecker           #+#    #+#             */
-/*   Updated: 2019/05/16 22:57:14 by sbecker          ###   ########.fr       */
+/*   Updated: 2019/09/04 15:28:26 by sbecker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,23 @@ static int	check_mabdelbrot_arg(char **argv, t_cl *cl)
 	return (0);
 }
 
+static void	print_usage(void)
+{
+	ft_printf("input:\n");
+	ft_printf("mandelbrot_2d, mandelbrot_2d_pow5, mandelbrot_fdf, mandelbrot_3d_fast, mandelbrot_3d_safety;\n");
+	ft_printf("julia_2d, julia_2d_pow5, julia_fdf, julia_3d_fast, julia_3d_safety;\n");
+	ft_printf("burning_ship_2d, burning_ship_2d_pow5;\n");
+	ft_printf("newton1, newton2\n");
+	ft_printf("fractal_dick\n");
+}
+
 int			main(int argc, char **argv)
 {
 	t_cl		cl;
 
 	if (argc != 2)
 	{
-		ft_printf("KAAAAAAAA!!!\n");
+		print_usage();
 		return (0);
 	}
 	initialization_cl(&cl);
@@ -88,7 +98,7 @@ int			main(int argc, char **argv)
 	else if (ft_strequ(argv[1], "fractal_dick"))
 		fractal_dick(&cl);
 	else
-		ft_printf("KUUUUUUUUUUUU!!!\n");
+		print_usage();
 	exit_event(&cl);
 	return (0);
 }
