@@ -2,9 +2,9 @@ NAME = fractol
 
 #-g -fsanitize=address
 
-FLAGS = -c -O3 -Wall -Werror -Wextra
+FLAGS = -O3 -Wall -Werror -Wextra
 
-MLXFLAGS = -lmlx -framework OpenGL -framework OpenCL -framework AppKit -O3 -Wall -Werror -Wextra
+FRAMEWORKS = -framework OpenGL -framework OpenCL -framework AppKit
 
 SRC = fractol.c
 
@@ -60,9 +60,11 @@ UTILITS = color.c \
 		  math_complex1.c \
 		  math_complex2.c
 
-INCLUDES = $(addprefix -I, ./includes)
+INCLUDES = -I ./includes -I ./minilibx_macos
 
-LIB = libft/libft.a
+LIBFT = ./libft/libft.a
+
+LIBMLX = -L ./minilibx_macos -lmlx
 
 DIR_O = objs
 
@@ -82,65 +84,68 @@ OBJS = $(addprefix $(DIR_O)/,$(SRC:.c=.o)) \
 	$(addprefix $(DIR_O)/,$(UTILITS:.c=.o)) \
 	$(addprefix $(DIR_O)/,$(SRC_RT:.c=.o)) 
 
-all: $(LIB) $(NAME)
-
-$(LIB):
-	@echo "\x1b[35;01mCompilation Lib and binary\x1b[32;01m"
-	@make -C ./libft
+all: make_libs $(NAME)
 
 $(NAME): $(DIR_O) $(OBJS)
-	gcc -I /usr/local/include $(OBJS) $(LIB) -L /usr/local/lib/ $(MLXFLAGS) -o $(NAME)
+	gcc $(FLAGS) $(OBJS) $(LIBFT) $(LIBMLX) $(FRAMEWORKS) -o $(NAME)
 
 $(DIR_O):
 	mkdir -p $(DIR_O)
 
 $(DIR_O)/%.o: $(DIR_S)/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/mandel2d/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/mandelfdf/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/mandel3d/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/julia2d/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/juliafdf/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/julia3d/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/burning_ship2d/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/newton/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/fractal_dick/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/ray_trace_render/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/common/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 
 $(DIR_O)/%.o: $(DIR_S)/utilits/%.c
-	gcc $(FLAGS) $(INCLUDES) -o $@ $<
+	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
+
+make_libs:
+	@echo "\x1b[35;01mCompilation Libraries\x1b[32;01m"
+	@make -C ./libft
+	@make -C ./minilibx_macos
 
 clean:
 	@echo "\x1b[36;01mDeliting .o files\x1b[31;01m"
 	@/bin/rm -rf $(DIR_O)
 	@make clean --directory ./libft
+	@make -C ./minilibx_macos/ clean
 
 fclean: clean
 	@echo "\x1b[36;01mDeliting execute file\x1b[31;01m"
 	@/bin/rm -f $(NAME)
 	@make fclean --directory ./libft
+	@make -C ./minilibx_macos/ clean
 
 re: fclean all
